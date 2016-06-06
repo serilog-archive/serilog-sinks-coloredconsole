@@ -1,23 +1,26 @@
 ﻿{
-  "version": "2.0.0-beta-*",
+  "version": "2.0.0-rc-*",
   "description": "The colored console sink for Serilog",
   "authors": [ "Serilog Contributors" ],
-  "tags": [ "serilog", "console", "coloredconsole" ],
-  "projectUrl": "http://serilog.net",
-  "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0",
-  "iconUrl": "http://serilog.net/images/serilog-sink-nuget.png",
-  "dependencies": {
-    "Serilog": "2.0.0-beta-505"
+  "packOptions": {
+    "tags": [ "serilog", "console", "coloredconsole" ],
+    "projectUrl": "http://serilog.net",
+    "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0",
+    "iconUrl": "http://serilog.net/images/serilog-sink-nuget.png"
   },
-  "compilationOptions": {
+  "dependencies": {
+    "Serilog": "2.0.0-rc-600"
+  },
+
+  "buildOptions": {
     "keyFile": "../../assets/Serilog.snk"
   },
   "frameworks": {
     "net45": {
     },
-    "dotnet5.1": {
+    "netstandard1.3": {
       "dependencies": {
-        "System.Console": "4.0.0-beta-23516"
+        "System.Console": "4.0.0-rc2-24027"
       }
     }
   }
