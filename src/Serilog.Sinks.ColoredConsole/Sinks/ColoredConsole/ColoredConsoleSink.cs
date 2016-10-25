@@ -62,12 +62,17 @@ namespace Serilog.Sinks.SystemConsole
 
         readonly object _syncRoot = new object();
         readonly MessageTemplate _outputTemplate;
+        readonly LogEventLevel? _standardErrorFromLevel;
 
-        public ColoredConsoleSink(string outputTemplate, IFormatProvider formatProvider)
+        public ColoredConsoleSink(
+            string outputTemplate,
+            IFormatProvider formatProvider,
+            LogEventLevel? standardErrorFromLevel)
         {
             if (outputTemplate == null) throw new ArgumentNullException(nameof(outputTemplate));
             _outputTemplate = new MessageTemplateParser().Parse(outputTemplate);
             _formatProvider = formatProvider;
+            _standardErrorFromLevel = standardErrorFromLevel;
         }
 
         const string StackFrameLinePrefix = "   ";
@@ -78,7 +83,7 @@ namespace Serilog.Sinks.SystemConsole
 
             var outputProperties = OutputProperties.GetOutputProperties(logEvent);
             var palette = GetPalette(logEvent.Level);
-            var output = Console.Out;
+            var output = GetOutputStream(logEvent.Level);
 
             lock (_syncRoot)
             {
@@ -181,6 +186,15 @@ namespace Serilog.Sinks.SystemConsole
         {
             Console.BackgroundColor = background;
             Console.ForegroundColor = foreground;
+        }
+
+        TextWriter GetOutputStream(LogEventLevel logLevel)
+         {
+            if (!_standardErrorFromLevel.HasValue)
+            {
+                return Console.Out;
+            }
+            return logLevel < _standardErrorFromLevel ? Console.Out : Console.Error;
         }
     }
 }
