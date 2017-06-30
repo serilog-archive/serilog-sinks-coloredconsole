@@ -52,7 +52,8 @@ namespace Serilog
                 formatProvider: formatProvider,
                 standardErrorFromLevel: standardErrorFromLevel,
                 theme: ColoredConsoleTheme.Default,
-                restrictedToMinimumLevel: restrictedToMinimumLevel);
+                restrictedToMinimumLevel: restrictedToMinimumLevel,
+                levelSwitch: levelSwitch);
         }
     }
 }
